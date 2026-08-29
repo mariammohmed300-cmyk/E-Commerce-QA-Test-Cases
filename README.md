@@ -1,160 +1,57 @@
 # 🛒 E-Commerce QA & Test Case Portfolio
 
-Welcome to my Software Testing and Quality Assurance portfolio repository! This project demonstrates professional manual testing capabilities, requirement analysis, structured test case creation, and bug tracking workflows.
+Welcome to the Software Testing and Quality Assurance portfolio repository! This project showcases comprehensive manual testing documentation, boundary value analysis (BVA), equivalence partitioning (EP), API testing endpoints, and security validation workflows for the Swag Labs e-commerce platform.
 
 ---
 
 ## 📌 Project Overview
-- **Target Application:** E-Commerce Platform (Swag Labs / Sample System)
-- **Scope:** Functional Testing, Boundary Value Analysis (BVA), API Testing, Security Basics, and UI/UX Verification.
-- **Total Test Cases Covered:** 28 structured test cases.
+- **Target Application:** Swag Labs E-Commerce Platform
+- **Scope:** Functional Testing, Boundary Value Analysis, API Testing, Security, and UI/UX Verification.
+- **Total Test Cases Covered:** 29 structured test cases.
 
 ---
 
 ## 📋 Comprehensive Test Cases Suite
 
-### 1. Login - Valid Credentials
-- **Business Rule:** Registered users must be able to log into the application using valid email and password credentials.
-- **Endpoint:** `POST /api/v1/login`
-- **Expected Result:** Status Code `200 OK` $\rightarrow$ Return authentication token and user profile data.
-
-### 2. Login - Invalid Password
-- **Business Rule:** The system must reject login attempts and deny access when an incorrect password is provided.
-- **Endpoint:** `POST /api/v1/login`
-- **Expected Result:** Status Code `401 Unauthorized` $\rightarrow$ Return error message: "Invalid email or password."
-
-### 3. User Registration - Mandatory Fields Validation
-- **Business Rule:** New user registration requires all mandatory fields (name, email, password) to be filled out.
-- **Endpoint:** `POST /api/v1/register`
-- **Expected Result:** Status Code `400 Bad Request` $\rightarrow$ Return validation error for missing password field.
-
-### 4. User Registration - Duplicate Email Prevention
-- **Business Rule:** The system must not allow duplicate accounts to be created using an email address that already exists in the database.
-- **Endpoint:** `POST /api/v1/register`
-- **Expected Result:** Status Code `409 Conflict` $\rightarrow$ Return error: "Email address is already registered."
-
-### 5. Password Policy - Minimum Length
-- **Business Rule:** User passwords must contain at least 8 characters to meet baseline security standards.
-- **Test Value:** `Abc12` (5 chars) $\rightarrow$ Invalid (`400 Bad Request`). `Abcdef12` (8 chars) $\rightarrow$ Valid (`200 OK`).
-
-### 6. Product Catalog - Retrieve All Products
-- **Business Rule:** Authenticated users should be able to view the full catalog of available products.
-- **Endpoint:** `GET /api/v1/products`
-- **Expected Result:** Status Code `200 OK` $\rightarrow$ Return a JSON array containing all active product listings.
-
-### 7. Product Details - Invalid ID
-- **Business Rule:** Requesting a product with a non-existent identifier must return a proper not-found status.
-- **Endpoint:** `GET /api/v1/products/99999`
-- **Expected Result:** Status Code `404 Not Found` $\rightarrow$ Return error: "Product not found."
-
-### 8. Shopping Cart - Add Item
-- **Business Rule:** Users must be able to add valid products and specified quantities to their shopping cart.
-- **Endpoint:** `POST /api/v1/cart/items`
-- **Expected Result:** Status Code `201 Created` $\rightarrow$ Return updated cart contents and item count.
-
-### 9. Shopping Cart - Negative Quantity Validation
-- **Business Rule:** Cart item quantities must be greater than zero; negative numbers or zero should be rejected.
-- **Endpoint:** `POST /api/v1/cart/items`
-- **Expected Result:** Status Code `400 Bad Request` $\rightarrow$ Return error: "Quantity must be at least 1."
-
-### 10. Shopping Cart - Remove Item
-- **Business Rule:** Users can remove existing items from their shopping cart.
-- **Endpoint:** `DELETE /api/v1/cart/items/prod_123`
-- **Expected Result:** Status Code `200 OK` $\rightarrow$ Item removed successfully.
-
-### 11. Checkout - Empty Cart Validation
-- **Business Rule:** Users cannot proceed to checkout if their shopping cart is empty.
-- **Endpoint:** `POST /api/v1/checkout`
-- **Expected Result:** Status Code `400 Bad Request` $\rightarrow$ Return error: "Cannot checkout with an empty cart."
-
-### 12. Checkout - Valid Order Placement
-- **Business Rule:** Users with items in their cart and valid shipping details can successfully place an order.
-- **Endpoint:** `POST /api/v1/checkout`
-- **Expected Result:** Status Code `201 Created` $\rightarrow$ Return order confirmation ID and status `Pending`.
-
-### 13. Order History - Retrieve User Orders
-- **Business Rule:** Users can view their historical orders and order statuses.
-- **Endpoint:** `GET /api/v1/orders`
-- **Expected Result:** Status Code `200 OK` $\rightarrow$ Return a list of past orders.
-
-### 14. User Profile - Update Details
-- **Business Rule:** Users can update their profile information such as phone number or display name.
-- **Endpoint:** `PUT /api/v1/user/profile`
-- **Expected Result:** Status Code `200 OK` $\rightarrow$ Return updated profile object.
-
-### 15. User Profile - Unauthorized Access
-- **Business Rule:** Protected profile endpoints must reject requests lacking a valid authentication token.
-- **Endpoint:** `GET /api/v1/user/profile` (No Auth Header)
-- **Expected Result:** Status Code `401 Unauthorized`.
-
-### 16. Address Management - Add Shipping Address
-- **Business Rule:** Users can add new shipping addresses to their address book.
-- **Endpoint:** `POST /api/v1/user/addresses`
-- **Expected Result:** Status Code `201 Created` $\rightarrow$ Return newly created address ID.
-
-### 17. Address Management - Missing Postal Code
-- **Business Rule:** Creating a shipping address requires mandatory fields like city and postal code.
-- **Endpoint:** `POST /api/v1/user/addresses`
-- **Expected Result:** Status Code `400 Bad Request`.
-
-### 18. Wishlist - Add Product
-- **Business Rule:** Users can save items to a personal wishlist for later purchase.
-- **Endpoint:** `POST /api/v1/wishlist`
-- **Expected Result:** Status Code `201 Created`.
-
-### 19. Wishlist - Duplicate Entry Handling
-- **Business Rule:** Adding an item that already exists in the wishlist should not create duplicate entries.
-- **Endpoint:** `POST /api/v1/wishlist`
-- **Expected Result:** Status Code `409 Conflict` or `200 OK` (Item already in wishlist).
-
-### 20. Pagination API - Handling Large Datasets
-- **Business Rule:** When querying a list of items, the API must support pagination parameters (`page` and `limit`).
-- **Endpoint:** `GET /api/v1/products?page=1&limit=10`
-- **Expected Result:** Status Code `200 OK` $\rightarrow$ Return 10 items per page with metadata.
-
-### 21. File Upload API - Format and Size Validation
-- **Business Rule:** Uploads must accept only allowed formats (e.g., `.png`, `.jpg`) and enforce a max size limit.
-- **Endpoint:** `POST /api/v1/upload`
-- **Expected Result:** Status Code `400 Bad Request` for invalid files.
-
-### 22. Search and Filtering API
-- **Business Rule:** Users can filter and search product lists using query parameters.
-- **Endpoint:** `GET /api/v1/products?search=laptop&category=electronics`
-- **Expected Result:** Status Code `200 OK` $\rightarrow$ Return filtered list.
-
-### 23. Password Reset - Token Expiration
-- **Business Rule:** Password reset links sent via email must expire after a specific time frame.
-- **Expected Result:** Show error: "Password reset token has expired."
-
-### 24. Cross-Origin Resource Sharing (CORS) Configuration
-- **Business Rule:** The API must restrict unauthorized cross-origin requests.
-- **Expected Result:** Status Code `403 Forbidden` for unapproved origins.
-
-### 25. Security - SQL Injection Prevention
-- **Business Rule:** Input fields must properly sanitize user input to prevent malicious SQL command injection.
-- **Expected Result:** Input sanitized, database access denied (`400/401`).
-
-### 26. UI/UX & Session - Inactivity Timeout
-- **Business Rule:** User sessions must automatically terminate after a specified period of inactivity.
-- **Expected Result:** Redirected to login page after timeout.
-
-### 27. Security - Cross-Site Scripting (XSS) Prevention
-- **Business Rule:** User input fields rendering data must sanitize HTML and JavaScript inputs.
-- **Expected Result:** Script tags neutralized/escaped safely.
-
-### 28. Localization and Multi-Language Support
-- **Business Rule:** The application must correctly switch UI labels and layout direction (LTR/RTL).
-- **Expected Result:** Text translates and layout aligns properly.
+* **Test Case 1: Age Validation** – Validates that the user age falls strictly between 18 and 60 using Equivalence Partitioning (EP) and Boundary Value Analysis (BVA).
+* **Test Case 2: Password Length Validation** – Enforces password length boundaries between 8 and 16 characters.
+* **Test Case 3: API - Verify Submitting Form with Valid Fields** – Tests form submission via API with valid payload data returning `200 OK` or `201 Created`.
+* **Test Case 4: API - Verify Submitting Form with Missing Name Field** – Validates that omitting the mandatory name field triggers a `400 Bad Request` or `422 Unprocessable Entity`.
+* **Test Case 5: API - Verify Submitting Form with Student Status** – Verifies successful processing and eligibility application when `is_student` is set to true.
+* **Test Case 6: Decision Table - Promo Code & Membership Validation** – Evaluates combination rules for Premium/Standard memberships and promo code discounts.
+* **Test Case 7: Login Screen - Failed Login Attempts & Account Lockout** – Locks user accounts for 15 minutes after 3 consecutive failed login attempts.
+* **Test Case 8: Decision Table Testing (General Form Rules)** – Tests complex condition matrices combining age, password length, and membership tiers.
+* **Test Case 9: Negative Test Case - Invalid Email Format** – Rejects email formats missing the `@` symbol or domain components.
+* **Test Case 10: API Negative Test Case - Unauthorized Access** – Denies access (`401 Unauthorized`) to protected endpoints when the authorization token is missing.
+* **Test Case 11: UI/UX Field Validation - Required Fields** – Triggers form validation error messages when required fields (Name, Email, Password) are blank.
+* **Test Case 12: API Negative Test Case - Invalid Method / Method Not Allowed** – Rejects incorrect HTTP methods (e.g., GET instead of POST) with a `405 Method Not Allowed` status.
+* **Test Case 13: Boundary Value Analysis - Maximum Age Limit** – Tests exact boundary limits around the maximum registration age of 60 years.
+* **Test Case 14: Password Character Complexity Validation** – Enforces strong password rules requiring uppercase letters, lowercase letters, numbers, and special characters.
+* **Test Case 15: API - Verify Duplicate Email Registration** – Prevents duplicate accounts by returning `409 Conflict` when registering with an existing email.
+* **Test Case 16: API - Update User Profile Data** – Allows authorized users to update profile details via valid PUT/PATCH requests.
+* **Test Case 17: API Delete User Account** – Permanently deletes user records via a valid DELETE request to the account endpoint (`200 OK` / `204 No Content`).
+* **Test Case 18: UI/UX Navigation - Logout Functionality** – Clears active user sessions, redirects to the login screen, and blocks browser back-button access.
+* **Test Case 19: UI/UX - Remember Me Functionality** – Persists authentication state across browser restarts when "Remember Me" is enabled.
+* **Test Case 20: API - Rate Limiting (Too Many Requests)** – Mitigates brute-force attacks by limiting rapid consecutive login attempts and returning `429 Too Many Requests`.
+* **Test Case 21: Pagination API - Handling Large Datasets** – Supports `page` and `limit` query parameters on list endpoints to optimize performance.
+* **Test Case 22: File Upload API - Format and Size Validation** – Enforces file type rules (e.g., png/jpg) and a maximum size limit of 5MB.
+* **Test Case 23: Search and Filtering API** – Validates that query parameters correctly filter and return matching records.
+* **Test Case 24: Password Reset - Token Expiration** – Expires password reset links after a specified time frame for enhanced security.
+* **Test Case 25: Cross-Origin Resource Sharing (CORS) Configuration** – Restricts unauthorized cross-origin requests by blocking unapproved frontend domains (`403 Forbidden`).
+* **Test Case 26: Security - SQL Injection Prevention** – Sanitizes user inputs on login and search fields to block malicious database injection attempts.
+* **Test Case 27: UI/UX & Session - Inactivity Timeout** – Automatically terminates user sessions after 20 minutes of inactivity to safeguard sensitive data.
+* **Test Case 28: Security - Cross-Site Scripting (XSS) Prevention** – Neutralizes and escapes HTML and JavaScript payloads rendered in profile bios or comment sections.
+* **Test Case 29: Localization and Multi-Language Support** – Correctly switches UI labels, messages, and layout directions (LTR for English, RTL for Arabic).
 
 ---
 
 ## 🛠️ Tools & Technologies Used
-- **Manual Testing & Test Case Management**
-- **Jira** (For Bug Tracking & Issue Management)
-- **Trello** (For Task & Board Organization)
-- **Postman** (For REST API Testing & Endpoint Validation)
+- **Manual Testing & Test Case Design** (Equivalence Partitioning & Boundary Value Analysis)
+- **Jira** (Issue Tracking, Bug Reporting & Kanban Boards)
+- **Trello** (Task Management & Board Organization)
+- **Postman** (REST API Testing & Endpoint Validation)
 
 ---
 
 ## 📄 License
-This project is open-source and available for portfolio and recruitment display purposes.
+This portfolio project is open-source and structured for recruitment and professional demonstration purposes.
